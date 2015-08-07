@@ -1,0 +1,12 @@
+#!/bin/sh
+
+REALDEVICE=$1
+USER=$2
+
+mkdir -p /var/run/pptpd-users
+if [ -f /var/run/pptpd-users/$USER ]; then
+        kill -15 `cat /var/run/pptpd-users/$USER | awk -F ' ' '{print $1}'`
+fi
+	cp "/var/run/$REALDEVICE.pid" /var/run/pptpd-users/$USER
+	sed -i "s/.*/& $REALDEVICE/" /var/run/pptpd-users/$USER
+done
